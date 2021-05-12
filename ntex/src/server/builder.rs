@@ -498,6 +498,8 @@ pub(crate) fn create_tcp_listener(
         net::SocketAddr::V6(_) => Socket::new(Domain::ipv6(), Type::stream(), None)?,
     };
     builder.set_reuse_address(true)?;
+    builder.set_recv_buffer_size(512)?;
+    builder.set_send_buffer_size(512)?;
     builder.bind(&SockAddr::from(addr))?;
     builder.listen(backlog)?;
     Ok(builder.into_tcp_listener())
